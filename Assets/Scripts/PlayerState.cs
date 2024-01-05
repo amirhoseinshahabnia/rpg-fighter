@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerState
 {
-
     protected PlayerStateMachine playerStateMachine;
     protected Player player;
 
@@ -19,7 +18,7 @@ public class PlayerState
 
     public virtual void Enter()
     {
-        Debug.Log("I started " + this.animBoolName);
+        player.animator.SetBool(animBoolName, true);
     }
 
     public virtual void Update()
@@ -29,7 +28,7 @@ public class PlayerState
 
     public virtual void Exit()
     {
-        Debug.Log("I am exiting " + this.animBoolName);
+        player.animator.SetBool(animBoolName, false);
     }
 
 }
