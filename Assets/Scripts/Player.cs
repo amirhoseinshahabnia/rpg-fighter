@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -25,6 +26,9 @@ public class Player : MonoBehaviour
 
     public PlayerAirState airState { get; private set; }
     public PlayerJumpState jumpState { get; private set; }
+
+    public int facingDirection { get; private set; } = 1;
+    private bool facingRight = true;
 
     private void Awake()
     {
@@ -52,6 +56,7 @@ public class Player : MonoBehaviour
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         rb.velocity = new Vector2(xVelocity, yVelocity);
+        FlipController(xVelocity);
     }
 
     public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -60,5 +65,25 @@ public class Player : MonoBehaviour
     {
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
+    }
+
+    public void Flip()
+    {
+        facingDirection = facingDirection * -1;
+        facingRight = !facingRight;
+        transform.Rotate(0, 180, 0);
+    }
+
+    public void FlipController(float _x)
+    {
+        if (_x < 0 && facingRight)
+        {
+            Flip();
+        }
+
+        else if (_x > 0 && !facingRight)
+        {
+            Flip();
+        }
     }
 }
