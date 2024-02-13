@@ -18,6 +18,11 @@ public class PlayerIdleState : PlayerGroundState
   {
     base.Update();
 
+    if (xInput == player.facingDirection && player.IsWallDetected())
+    {
+      return;
+    }
+
     if (xInput != 0)
     {
       playerStateMachine.ChangeState(player.moveState);
